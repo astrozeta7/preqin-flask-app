@@ -1,78 +1,146 @@
-Project Name
+# Random Array Generator API Documentation
 
-Preqin Flask Web Application
-Description
+Welcome to the documentation for the Random Array Generator API built with Flask. This documentation provides comprehensive information about the application's functionality, setup, usage, and more.
 
-This is a Flask web application that provides user registration, login, and random array generation functionality. The application uses SQLAlchemy for database management, Flask-Bcrypt for password hashing, and Flask-Login for user authentication.
-Table of Contents
+## Table of Contents
 
-- Installation
-- Usage
-- Endpoints
-- Contributing
-- License
-- Contact
-Installation
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Installation and Setup](#installation-and-setup)
+- [Configuration](#configuration)
+- [Database](#database)
+- [User Management](#user-management)
+- [Routes and Endpoints](#routes-and-endpoints)
+- [Running the Application](#running-the-application)
+- [Testing](#testing)
+- - [Running Tests](#running-tests)
+- [Deployment with Gunicorn](#deployment-with-gunicorn)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [References](#references)
 
-1. Clone the repository:
-git
+## Introduction
 
-2. Navigate to the project directory:
-app
+The Random Array Generator API is a Flask-based application that allows users to securely register, log in, and generate random arrays of floating-point numbers. The API is designed to provide a user-friendly and secure experience for accessing and utilizing random number generation.
 
-3. Create a virtual environment:
-venv
+## Prerequisites
 
-4. Activate the virtual environment:
-- For Windows:
-activate
-- For macOS/Linux:
-activate
+Before using the Random Array Generator API, ensure you have the following prerequisites installed:
 
-5. Install the required dependencies:
-txt
+- Python 3.x
+- Virtual environment (recommended)
+- Database system (SQLite, MySQL, PostgreSQL, etc.)
+- Environment variables (stored in a `.env` file)
+- Basic knowledge of Flask and web APIs
 
-6. Set up the environment variables:
-- Create a .env file in the project root directory.
-- Add the following variables to the .env file:
-your_database_uri
+## Installation and Setup
 
-7. Initialize the database:
-upgrade
-Usage
+1. Clone the repository to your local machine.
+2. Create and activate a virtual environment (optional but recommended):
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+3. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-1. Activate the virtual environment (if not already activated):
-- For Windows:
-activate
-- For macOS/Linux:
-activate
+## Configuration
 
-2. Start the application:
-run
+- **Logging Configuration**: The application's logging is configured to log events with timestamp, name, log level, and message format.
 
-3. Open your web browser and navigate to http://localhost:5000 to access the application.
-Endpoints
+## Database
 
-- / - Home page that displays the index.html template.
-- /register - User registration page. Allows users to create an account.
-- /login - User login page. Allows registered users to log in.
-- /logout - Logout endpoint. Logs out the currently logged-in user.
-- /random_array - POST endpoint that generates a random array based on the provided sentence in the request JSON payload.
-- /random_array_2 - POST endpoint that generates a random array based on the provided sentence in the request JSON payload.
-Contributing
+The Random Array Generator API uses a database to store user information and manage authentication. By default, it uses the SQLAlchemy library to interact with the database.
 
-Contributions to this project are welcome. To contribute, please follow these steps:
+- **Database Models**: The `User` model includes fields for `id`, `username`, and `password`.
 
-1. Fork the repository.
-2. Create a new branch.
-3. Make your changes and commit them.
-4. Push your changes to your forked repository.
-5. Submit a pull request.
+## User Management
 
-Please ensure that your contributions adhere to the coding standards and follow the project's guidelines.
-License
+The application provides user registration, login, and logout functionalities. Users can securely register, log in, and access the API endpoints.
 
-This project is licensed under the MIT License.
-Contact
+- **Registration**: Users can register with a unique username and a password following specific criteria.
+- **Login**: Registered users can log in securely using their credentials.
+- **Logout**: Logged-in users can log out of their sessions.
 
-For any questions or inquiries, please contact your-name.
+## Routes and Endpoints
+
+- `/`: The root URL requires user authentication and displays the main interface.
+- `/register`: Supports both GET and POST methods for user registration.
+- `/login`: Supports both GET and POST methods for user login.
+- `/logout`: Requires authentication and logs out the user.
+- `/random_array`: Generates a random array based on the input sentence.
+- `/random_array_2`: Generates another random array based on the input sentence.
+
+## Running the Application
+
+To run the application:
+
+1. Ensure the database connection is configured in the `.env` file.
+2. Run the following command to create database tables:
+   ```bash
+   python app.py
+   ```
+3. The application will start in development mode and can be accessed at `http://localhost:8000`.
+
+## Testing
+
+### Running Tests
+
+To run tests using the unittest framework:
+
+```bash
+python -m unittest discover tests
+```
+
+## Deployment with Gunicorn
+
+The Random Array Generator API can be deployed using Gunicorn for better performance and reliability. Follow these steps to deploy the application with Gunicorn:
+
+1. Install Gunicorn:
+   ```bash
+   pip install gunicorn
+   ```
+2. Run the application using Gunicorn:
+   ```bash
+   gunicorn -b 0.0.0.0:8000 app:app
+   ```
+
+## Containerization with Docker
+
+The application can be containerized using Docker for easy deployment and isolation. Follow these steps to create a Docker container for the application:
+
+1. Install Docker on your machine.
+2. Build the Docker image from the project directory:
+   ```bash
+   docker build -t random-array-api .
+   ```
+3. Run the Docker container:
+   ```bash
+   docker run -p 8000:8000 random-array-api
+   ```
+
+## Troubleshooting
+
+Refer to the [Troubleshooting](#troubleshooting) section in the documentation for common issues and solutions.
+For any issues please contact the author.
+Author : zeeshan.mohammed.k@gmail
+
+## Contributing
+
+- Contributions are welcome. Fork the repository, create a feature branch, make your changes, and submit a pull request.
+- Please adhere to the project's code style and guidelines.
+
+## References
+
+- Flask: https://flask.palletsprojects.com/
+- SQLAlchemy: https://www.sqlalchemy.org/
+- Flask-Bcrypt: https://flask-bcrypt.readthedocs.io/
+- Flask-Login: https://flask-login.readthedocs.io/
+- Python Random Module: https://docs.python.org/3/library/random.html
+- Gunicorn: https://gunicorn.org/
+
+---
+
+By following this documentation, you can successfully set up, configure, and use the Random Array Generator API built with Flask. If you encounter any issues or have questions, please refer to the [Troubleshooting](#troubleshooting) section or reach out to the project maintainers. Happy coding!
