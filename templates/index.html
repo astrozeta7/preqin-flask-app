@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Array Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+    </nav>
+    <h1>Random Array Generator</h1>
+    {% if current_user.is_authenticated %}
+        <form id="input-form">
+            <label for="sentence">Enter a Sentence:</label>
+            <input type="text" id="sentence" name="sentence" required>
+            <button type="submit">Generate Random Array</button>
+        </form>
+  
+        <div id="response">
+            <h2>Random Array Response:</h2>
+            <pre id="array-output"></pre>
+        </div>
+        <script>
+            document.getElementById("input-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const sentence = document.getElementById("sentence").value;
+            fetch("/random_array", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ sentence: sentence })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const arrayOutput = document.getElementById("array-output");
+                arrayOutput.textContent = JSON.stringify(data.array, null, 2);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        });
+        </script>
+    {% else %}
+        <p>Please <a href="{{ url_for('login') }}">login</a> or <a href="{{ url_for('register') }}">register</a> to access the functionality.</p>
+    {% endif %}
+</body>
+</html>
